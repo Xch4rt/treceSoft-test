@@ -1,0 +1,9 @@
+-- CreateTable
+CREATE TABLE "Rol" (
+    "Id" SERIAL NOT NULL,
+    "Description" VARCHAR(250) NOT NULL,
+    "Status" BOOLEAN NOT NULL DEFAULT true,
+    "CreatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Rol_pkey" PRIMARY KEY ("Id")
+);
