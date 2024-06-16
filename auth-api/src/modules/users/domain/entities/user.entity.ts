@@ -4,6 +4,7 @@ export class User {
     public password?: string;
     public email: string;
     public name: string;
+    public roleId: number;
     public status?: boolean;
     public readonly createdAt?: Date;
 
@@ -11,6 +12,7 @@ export class User {
         username: string,
         email: string,
         name: string,
+        roleId: number,
         password?: string,
         id?: number,
         status?: boolean,
@@ -19,6 +21,7 @@ export class User {
         this.username = username;
         this.email = email;
         this.name = name;
+        this.roleId = roleId;
         this.password = password;
         this.id = id;
         this.status = status ?? true; // Por defecto, el estado es verdadero

@@ -19,6 +19,8 @@ model User {
   Password String @db.VarChar(100)
   Email String @db.VarChar(250)
   Name String @db.VarChar(250)
+  RoleId Int
+  Role Rol @relation(fields: [RoleId], references: [Id])
   Status Boolean @default(true)
   CreatedAt DateTime @default(now())
 }
@@ -26,6 +28,7 @@ model User {
 model Rol {
   Id Int @default(autoincrement()) @id
   Description String @db.VarChar(250)
+  Users User[]
   Status Boolean @default(true)
   CreatedAt DateTime @default(now())
 }

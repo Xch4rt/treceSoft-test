@@ -22,13 +22,46 @@ export class RolRepository implements IRolRepository {
             createdRol.CreatedAt
         )
     }
-    findById(id: number): Promise<Rol> {
-        throw new Error("Method not implemented.");
+    async findById(id: number): Promise<Rol> {
+        const role = await this.prisma.rol.findUnique({
+            where: {Status: true, Id: id}
+        });
+
+        if (!role) return null;
+
+        return new Rol(
+            role.Description,
+            role.Id,
+            role.Status,
+            role.CreatedAt
+        )
     }
-    findAll(): Promise<Rol[]> {
-        throw new Error("Method not implemented.");
+    async findAll(): Promise<Rol[]> {
+        const roles = await this.prisma.rol.findMany({
+            where: {Status: true}
+        });
+
+        if (!roles) return null;
+
+        return roles.map(
+            role => new Rol(
+                role.Description,
+                role.Id,
+                role.Status,
+                role.CreatedAt
+            )
+        )
     }
-    delete(id: number): Promise<void> {
-        throw new Error("Method not implemented.");
+    async delete(id: number): Promise<void> {
+        const deletedRole = await this.prisma.rol.update({
+            where: {
+                Id: id
+            },
+            data: {
+                Status: false
+            }
+        });
+
+        if (!deletedRole) return null;
     }
 }

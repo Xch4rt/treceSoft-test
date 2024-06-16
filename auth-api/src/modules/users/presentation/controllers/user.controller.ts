@@ -13,7 +13,6 @@ export class UserController {
 
     @Post()
     async createUser(@Body() createUserDto: CreateUserDto) : Promise<any> {
-        const { username, password, email, name } = createUserDto;
         
         const command = new CreateUserCommand(createUserDto);
 

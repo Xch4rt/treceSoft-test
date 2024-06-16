@@ -15,14 +15,16 @@ export class UserRepository implements IUserRepository {
                 Email: user.email,
                 Password: user.password,
                 Username: user.username,
+                RoleId: user.roleId
             }
         });
 
         return new User(
             createdUser.Username,
-            createdUser.Password,
             createdUser.Email,
             createdUser.Name,
+            createdUser.RoleId,
+            createdUser.Password
         )
     }
     async findById(id: number): Promise<User> {
@@ -36,6 +38,7 @@ export class UserRepository implements IUserRepository {
             user.Username,
             user.Email,
             user.Name,
+            user.RoleId,
             user.Password,
             user.Id,
             user.Status,
@@ -54,6 +57,7 @@ export class UserRepository implements IUserRepository {
             user.Username,
             user.Email,
             user.Name,
+            user.RoleId,
             user.Password,
             user.Id,
             user.Status,
@@ -71,6 +75,7 @@ export class UserRepository implements IUserRepository {
             user.Username,
             user.Email,
             user.Name,
+            user.RoleId,
             user.Password,
             user.Id,
             user.Status,
@@ -89,6 +94,7 @@ export class UserRepository implements IUserRepository {
                 user.Username,
                 user.Email,
                 user.Name,
+                user.RoleId,
                 user.Password,
                 user.Id,
                 user.Status,
@@ -97,7 +103,7 @@ export class UserRepository implements IUserRepository {
         )
     }
     async delete(id: number): Promise<void> {
-        const updatedUser = await this.prisma.user.update({
+        const deletedUser = await this.prisma.user.update({
             where: {
                 Id: id
             },
@@ -106,7 +112,7 @@ export class UserRepository implements IUserRepository {
             }
         });
 
-        if (!updatedUser) return null;
+        if (!deletedUser) return null;
     }
     
 }
