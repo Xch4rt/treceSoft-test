@@ -22,3 +22,10 @@ model User {
   Status Boolean @default(true)
   CreatedAt DateTime @default(now())
 }
+
+model Rol {
+  Id Int @default(autoincrement()) @id
+  Description String @db.VarChar(250)
+  Status Boolean @default(true)
+  CreatedAt DateTime @default(now())
+}
