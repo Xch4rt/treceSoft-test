@@ -27,7 +27,7 @@ async function bootstrap() {
     .setTitle('TreceSoftware Auth API Restfull ')
     .setDescription('Technical test')
     .setVersion('1.0')
-    //.addBearerAuth()
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

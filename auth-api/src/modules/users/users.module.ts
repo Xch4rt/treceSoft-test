@@ -8,6 +8,7 @@ import { UserController } from './presentation/controllers/user.controller';
 import { CommonModule } from 'src/common/common.module';
 import { RolesModule } from '../roles/roles.module';
 import { ROL_REPOSITORY } from 'src/common/constants/rol.repository';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [CqrsModule, CommonModule, RolesModule],
@@ -20,5 +21,6 @@ import { ROL_REPOSITORY } from 'src/common/constants/rol.repository';
     },
     CreateUserHandler,
   ],
+  exports: [USER_REPOSITORY]
 })
 export class UsersModule {}
