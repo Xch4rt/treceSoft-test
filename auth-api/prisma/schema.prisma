@@ -21,6 +21,7 @@ model User {
   Name String @db.VarChar(250)
   RoleId Int
   Role Rol @relation(fields: [RoleId], references: [Id])
+  Token Token[]
   Status Boolean @default(true)
   CreatedAt DateTime @default(now())
 }
@@ -31,4 +32,14 @@ model Rol {
   Users User[]
   Status Boolean @default(true)
   CreatedAt DateTime @default(now())
+}
+
+model Token {
+  Id Int @default(autoincrement()) @id
+  UserId Int
+  ResetToken String @db.VarChar(250)
+  ResetTokenExpiry DateTime
+  User User @relation(fields: [UserId], references: [Id])
+
+  @@index([UserId])
 }

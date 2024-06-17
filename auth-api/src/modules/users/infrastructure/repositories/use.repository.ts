@@ -24,12 +24,15 @@ export class UserRepository implements IUserRepository {
             createdUser.Email,
             createdUser.Name,
             createdUser.RoleId,
-            createdUser.Password
+            createdUser.Password,
         )
     }
     async findById(id: number): Promise<User> {
         const user = await this.prisma.user.findUnique({
-            where: {Id: id, Status: true}
+            where: {Id: id, Status: true},
+            include: {
+                Role: true
+            }
         });
 
         if (!user) return null;
@@ -40,6 +43,7 @@ export class UserRepository implements IUserRepository {
             user.Name,
             user.RoleId,
             user.Password,
+            user.Role.Description,
             user.Id,
             user.Status,
             user.CreatedAt
@@ -48,7 +52,10 @@ export class UserRepository implements IUserRepository {
 
     async findByUsername(username: string): Promise<User | null> {
         const user = await this.prisma.user.findFirst({
-            where: {Username: username, Status: true}
+            where: {Username: username, Status: true},
+            include: {
+                Role: true
+            }
         });
 
         if (!user) return null;
@@ -59,6 +66,7 @@ export class UserRepository implements IUserRepository {
             user.Name,
             user.RoleId,
             user.Password,
+            user.Role.Description,
             user.Id,
             user.Status,
             user.CreatedAt
@@ -66,7 +74,10 @@ export class UserRepository implements IUserRepository {
     }
     async findByEmail(email: string): Promise<User | null> {
         const user = await this.prisma.user.findFirst({
-            where: {Email: email, Status: true}
+            where: {Email: email, Status: true},
+            include: {
+                Role: true
+            }
         });
 
         if (!user) return null;
@@ -77,6 +88,7 @@ export class UserRepository implements IUserRepository {
             user.Name,
             user.RoleId,
             user.Password,
+            user.Role.Description,
             user.Id,
             user.Status,
             user.CreatedAt
@@ -84,7 +96,10 @@ export class UserRepository implements IUserRepository {
     }
     async findAll(): Promise<User[]> {
         const users = await this.prisma.user.findMany({
-            where: {Status: true}
+            where: {Status: true},
+            include: {
+                Role: true
+            }
         });
 
         if (!users) return null;
@@ -96,6 +111,7 @@ export class UserRepository implements IUserRepository {
                 user.Name,
                 user.RoleId,
                 user.Password,
+                user.Role.Description,
                 user.Id,
                 user.Status,
                 user.CreatedAt

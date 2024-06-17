@@ -8,6 +8,8 @@ import { Rol } from '../../domain/entities/rol.entity';
 import { GetRoleByIdQuery } from '../../application/queries/get-role-by-id.query';
 import { JwtAuthGuard } from 'src/modules/auth/infraestructure/guards/jwt-auth.guard';
 import { AuthGuard } from '@nestjs/passport';
+import { Roles } from 'src/modules/auth/infraestructure/decorators/roles.decorator';
+import { RoleGuard } from 'src/modules/auth/infraestructure/guards/roles.guard';
 
 @Controller('roles')
 @ApiTags('Roles Endpoints')
@@ -27,7 +29,8 @@ export class RolController {
     }
 
     @Get()
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles('Role1')
     async getAllRoles(): Promise<Rol[]> {
         return this.queryBus.execute(new GetAllRolesQuery());
     }

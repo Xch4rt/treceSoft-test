@@ -22,7 +22,7 @@ export class AuthRepository implements IAuthRepository {
 
         if (!passwordMath) return null;
 
-        const payload = { username: user.username, sub: user.id}
+        const payload = { username: user.username, sub: user.id, role: user.role}
 
         return {
             user: user,

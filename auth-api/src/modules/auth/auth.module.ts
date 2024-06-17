@@ -4,7 +4,7 @@ import { PrismaService } from './infraestructure/prisma/prisma.service';
 import { AuthRepository } from './infraestructure/repositories/auth.repository';
 import { AUTH_REPOSITORY } from 'src/common/constants/auth.repository';
 import { LoginUserHandler } from './application/handlers/login-user.handler';
-import { LoginUserController } from './presentation/controllers/login.controller';
+import { AuthController } from './presentation/controllers/auth.controller';
 import { CommonModule } from 'src/common/common.module';
 import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
@@ -12,12 +12,16 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './infraestructure/strategies/jwt.strategy';
 import { JwtAuthGuard } from './infraestructure/guards/jwt-auth.guard';
+import { RecoverPasswordHandler } from './application/handlers/recover-password.handler';
+import { PasswordResetRepository } from './infraestructure/repositories/password-reset.repository';
+import { RolesModule } from '../roles/roles.module';
 
 @Module({
   imports: [
     CqrsModule, 
     CommonModule, 
     UsersModule,
+    RolesModule,
     ConfigModule,
     PassportModule,
     JwtModule.registerAsync({
@@ -30,7 +34,7 @@ import { JwtAuthGuard } from './infraestructure/guards/jwt-auth.guard';
       }),
       inject: [ConfigService]
     })],
-  controllers: [LoginUserController],
+  controllers: [AuthController],
   providers: [
     PrismaService,
     {
@@ -38,6 +42,8 @@ import { JwtAuthGuard } from './infraestructure/guards/jwt-auth.guard';
       useClass: AuthRepository,
     },
     LoginUserHandler,
+    RecoverPasswordHandler,
+    PasswordResetRepository,
     JwtStrategy,
     JwtAuthGuard
   ],
