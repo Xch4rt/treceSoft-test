@@ -9,6 +9,10 @@ import { CommonModule } from 'src/common/common.module';
 import { RolesModule } from '../roles/roles.module';
 import { ROL_REPOSITORY } from 'src/common/constants/rol.repository';
 import { AuthModule } from '../auth/auth.module';
+import { GetAllUsersHandler } from './application/handlers/get-all-users.handler';
+import { GetUserByIdHandler } from './application/handlers/get-user-by-id.handler';
+import { GetUserByUsernameHandler } from './application/handlers/get-user-by-username.handler';
+import { GetUserByEmailHandler } from './application/handlers/get-user-by-email.handler';
 
 @Module({
   imports: [CqrsModule, CommonModule, RolesModule],
@@ -20,6 +24,10 @@ import { AuthModule } from '../auth/auth.module';
       useClass: UserRepository,
     },
     CreateUserHandler,
+    GetAllUsersHandler,
+    GetUserByIdHandler,
+    GetUserByUsernameHandler,
+    GetUserByEmailHandler
   ],
   exports: [USER_REPOSITORY]
 })
