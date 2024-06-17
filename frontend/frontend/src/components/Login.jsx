@@ -18,6 +18,7 @@ const Login = () => {
 
             localStorage.setItem('token', response.data.access_token);
             localStorage.setItem('role', response.data.user.role);
+            localStorage.setItem('userId', response.data.user.id)
             console.log('Login exitoso')
 
             navigate('/dashboard');
