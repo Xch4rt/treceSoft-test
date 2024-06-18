@@ -13,6 +13,7 @@ import { GetAllUsersHandler } from './application/handlers/get-all-users.handler
 import { GetUserByIdHandler } from './application/handlers/get-user-by-id.handler';
 import { GetUserByUsernameHandler } from './application/handlers/get-user-by-username.handler';
 import { GetUserByEmailHandler } from './application/handlers/get-user-by-email.handler';
+import { UpdateUserHandler } from './application/handlers/update-user.handler';
 
 @Module({
   imports: [CqrsModule, CommonModule, RolesModule],
@@ -27,7 +28,8 @@ import { GetUserByEmailHandler } from './application/handlers/get-user-by-email.
     GetAllUsersHandler,
     GetUserByIdHandler,
     GetUserByUsernameHandler,
-    GetUserByEmailHandler
+    GetUserByEmailHandler,
+    UpdateUserHandler
   ],
   exports: [USER_REPOSITORY]
 })

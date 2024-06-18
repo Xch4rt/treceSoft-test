@@ -5,6 +5,9 @@ import { LoginUserDto } from '../dtos/login-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { RecoverPasswordCommand } from '../../application/commands/recover-password';
+import { RecoverPasswordDto } from '../dtos/recover-password.dto';
+import { ResetPasswordDto } from '../dtos/reset-password.dto';
+import { ResetPasswordCommand } from '../../application/commands/reset-password';
 
 @Controller('auth')
 @ApiTags('Auth Endpoints')
@@ -21,8 +24,15 @@ export class AuthController {
     }
 
     @Post('recover-password')
-    async recoverPassword(@Body('email') email: string) : Promise<any>{
-        const command = new RecoverPasswordCommand(email);
+    async recoverPassword(@Body() recoverPasswordDto: RecoverPasswordDto) : Promise<any>{
+        const command = new RecoverPasswordCommand(recoverPasswordDto);
+        console.log(command);
+        return this.commandBus.execute(command);
+    }
+
+    @Post('reset-password')
+    async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) : Promise<any>{
+        const command = new ResetPasswordCommand(resetPasswordDto);
         console.log(command);
         return this.commandBus.execute(command);
     }

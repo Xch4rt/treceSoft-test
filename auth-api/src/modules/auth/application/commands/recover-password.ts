@@ -1,5 +1,5 @@
-import { LoginUserDto } from "../dtos/login-user.dto";
+import { RecoverPasswordDto } from "../dtos/recover-password.dto";
 
 export class RecoverPasswordCommand {
-    constructor(public readonly email: string) {}
+    constructor(public readonly recoverPasswordDto: RecoverPasswordDto) {}
 }

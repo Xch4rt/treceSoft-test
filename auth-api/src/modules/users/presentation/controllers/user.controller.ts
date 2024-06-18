@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, UseGuards, Patch, Delete } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from '../../application/commands/create-user.command';
 import { CreateUserDto } from '../dtos/create-user.dto';
@@ -10,6 +10,9 @@ import { GetUserByEmailQuery } from '../../application/queries/get-user-by-email
 import { JwtAuthGuard } from 'src/modules/auth/infraestructure/guards/jwt-auth.guard';
 import { RoleGuard } from 'src/modules/auth/infraestructure/guards/roles.guard';
 import { Roles } from 'src/modules/auth/infraestructure/decorators/roles.decorator';
+import { UpdateUserDto } from '../dtos/update-user.dto';
+import { UpdateUserCommand } from '../../application/commands/update-user.command';
+import { DeleteUserCommand } from '../../application/commands/delete-user.command';
 
 @Controller('users')
 @ApiTags('Users Endpoints')
@@ -57,5 +60,23 @@ export class UserController {
     @Roles('SuperAdmin')
     async getUserByEmail(@Param('email') email: string) : Promise<any> {
         return this.queryBus.execute(new GetUserByEmailQuery(email));
+    }
+
+    @Patch(':id')
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles('SuperAdmin')
+    async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+        const userId = parseInt(id, 10);
+
+        return this.commandBus.execute(new UpdateUserCommand(userId, updateUserDto));
+    }
+
+    @Delete(':id')
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles('SuperAdmin')
+    async delete(@Param('id') id: string) {
+        const userId = parseInt(id, 10);
+
+        return this.commandBus.execute(new DeleteUserCommand(userId));
     }
 }

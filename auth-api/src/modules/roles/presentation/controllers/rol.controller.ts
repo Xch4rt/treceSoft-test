@@ -20,7 +20,8 @@ export class RolController {
     ) {}
 
     @Post()
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles('SuperAdmin')
     async createRol(@Body() createRolDto: CreateRolDto) : Promise<any> {
 
         const command = new CreateRolCommand(createRolDto);
@@ -36,7 +37,8 @@ export class RolController {
     }
 
     @Get(':id')
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtAuthGuard, RoleGuard)
+    @Roles('SuperAdmin')
     async getRolById(@Param('id') id: string) : Promise<Rol> {
         const roleId = parseInt(id, 10);
 

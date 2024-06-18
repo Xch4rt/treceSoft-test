@@ -7,34 +7,20 @@ import { MailService } from "src/common/services/mail.service";
 import { PasswordResetRepository } from "../../infraestructure/repositories/password-reset.repository";
 import {v4 as uuidv4 } from 'uuid';
 import { IPasswordResetRepository } from "../../domain/repositories/password-reset.repository";
+import { ResetPasswordCommand } from "../commands/reset-password";
 
-@CommandHandler(RecoverPasswordCommand) 
-export class RecoverPasswordHandler implements ICommandHandler<RecoverPasswordCommand> {
+@CommandHandler(ResetPasswordCommand) 
+export class ResetPasswordHandler implements ICommandHandler<ResetPasswordCommand> {
 
     constructor (
         @Inject(USER_REPOSITORY) private readonly userRepository: IUserRepository,
-                                 private readonly mailService: MailService,
                                  private readonly passwordResetRepository: PasswordResetRepository
     ){}
 
-    async execute(command: RecoverPasswordCommand): Promise<any> {
-        const { recoverPasswordDto } = command;
+    async execute(command: ResetPasswordCommand): Promise<any> {
+        const { resetPasswordDto } = command;
 
-        const user = await this.userRepository.findByEmail(recoverPasswordDto.email);
-
-        if (!user && user.username == recoverPasswordDto.username) {
-            throw new NotFoundException('User not found');
-        }
-
-        const resetToken = uuidv4();
-
-        await this.passwordResetRepository.savePasswordResetToken(user.id, resetToken);
-
-        await this.mailService.sendMail(
-            recoverPasswordDto.email,
-            'Password Reset',
-            `To reset your password, please use the following token: ${resetToken}`
-        );
+        await this.passwordResetRepository.resetPassword(resetPasswordDto.userId, resetPasswordDto.password, resetPasswordDto.token);
     }
     
 }

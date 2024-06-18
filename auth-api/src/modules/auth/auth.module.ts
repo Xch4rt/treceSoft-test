@@ -15,6 +15,7 @@ import { JwtAuthGuard } from './infraestructure/guards/jwt-auth.guard';
 import { RecoverPasswordHandler } from './application/handlers/recover-password.handler';
 import { PasswordResetRepository } from './infraestructure/repositories/password-reset.repository';
 import { RolesModule } from '../roles/roles.module';
+import { ResetPasswordHandler } from './application/handlers/reset-password.handler';
 
 @Module({
   imports: [
@@ -43,9 +44,10 @@ import { RolesModule } from '../roles/roles.module';
     },
     LoginUserHandler,
     RecoverPasswordHandler,
+    ResetPasswordHandler,
     PasswordResetRepository,
     JwtStrategy,
-    JwtAuthGuard
+    JwtAuthGuard,
   ],
   exports: [AUTH_REPOSITORY, JwtAuthGuard]
 })
