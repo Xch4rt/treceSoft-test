@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const CreateUser = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const [role, setRole] = useState('');
+  const [roleId, setRoleId] = useState('');
   const [password, setPassword] = useState('');
+  const [roles, setRoles] = useState([]);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchRoles = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/roles', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        setRoles(response.data);
+      } catch (err) {
+        console.error('Error fetching roles:', err);
+      }
+    };
+
+    fetchRoles();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +34,7 @@ const CreateUser = () => {
         username,
         email,
         name,
-        role,
+        roleId,
         password
       }, {
         headers: {
@@ -36,7 +54,7 @@ const CreateUser = () => {
       <h2 className="text-2xl font-bold mb-4">Crear Usuario</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+          <label htmlFor="username" className="block text-sm font-medium text-white-700">Username</label>
           <input
             type="text"
             id="username"
@@ -47,7 +65,7 @@ const CreateUser = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium text-white-700">Email</label>
           <input
             type="email"
             id="email"
@@ -58,7 +76,7 @@ const CreateUser = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+          <label htmlFor="name" className="block text-sm font-medium text-white-700">Name</label>
           <input
             type="text"
             id="name"
@@ -69,18 +87,24 @@ const CreateUser = () => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="role" className="block text-sm font-medium text-gray-700">Role</label>
-          <input
-            type="text"
+          <label htmlFor="role" className="block text-sm font-medium text-white-700">Role</label>
+          <select
             id="role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
+            value={roleId}
+            onChange={(e) => setRoleId(e.target.value)}
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
             required
-          />
+          >
+            <option value="">Selecciona un rol</option>
+            {roles.map((role) => (
+              <option key={role.id} value={role.id}>
+                {role.description}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+          <label htmlFor="password" className="block text-sm font-medium text-white-700">Password</label>
           <input
             type="password"
             id="password"
@@ -98,7 +122,7 @@ const CreateUser = () => {
         <button type="submit" className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-md">Crear Usuario</button>
       </form>
     </div>
-  );
-};
+  )
+}
 
 export default CreateUser;

@@ -8,7 +8,7 @@ export class UserRepository implements IUserRepository {
 
     constructor(private readonly prisma: PrismaService) {}
 
-    async update(id: number, user: User): Promise<User> {
+    async update(id: number, user: Partial<User>): Promise<User> {
         const findUser = await this.prisma.user.findUnique({
             where: {
                 Id: id
@@ -19,12 +19,16 @@ export class UserRepository implements IUserRepository {
             throw new NotFoundException('User not found');
         }
 
+        const { username, email, name, roleId } = user;
+
         const updatedUser = await this.prisma.user.update({
             where: {
                 Id: id
             }, data: {
-                ...findUser,
-                ...user
+                Username: username,
+                Email: email,
+                Name: name,
+                RoleId: roleId
             }
         });
 

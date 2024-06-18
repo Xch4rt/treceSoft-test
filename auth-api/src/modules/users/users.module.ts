@@ -14,6 +14,7 @@ import { GetUserByIdHandler } from './application/handlers/get-user-by-id.handle
 import { GetUserByUsernameHandler } from './application/handlers/get-user-by-username.handler';
 import { GetUserByEmailHandler } from './application/handlers/get-user-by-email.handler';
 import { UpdateUserHandler } from './application/handlers/update-user.handler';
+import { DeleteUserHandler } from './application/handlers/delete-user.handler';
 
 @Module({
   imports: [CqrsModule, CommonModule, RolesModule],
@@ -25,6 +26,7 @@ import { UpdateUserHandler } from './application/handlers/update-user.handler';
       useClass: UserRepository,
     },
     CreateUserHandler,
+    DeleteUserHandler,
     GetAllUsersHandler,
     GetUserByIdHandler,
     GetUserByUsernameHandler,

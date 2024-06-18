@@ -16,13 +16,13 @@ export class UpdateUserHandler implements ICommandHandler<UpdateUserCommand> {
     async execute(command: UpdateUserCommand): Promise<any> {
         const { updateUserDto, userId } = command;
 
-    
+        const roleId = parseInt(updateUserDto.roleId, 10);
 
         const user = new User(
             updateUserDto.username,
             updateUserDto.email,
             updateUserDto.name,
-            updateUserDto.roleId,
+            roleId,
         );
 
         return await this.userRepository.update(userId, user);

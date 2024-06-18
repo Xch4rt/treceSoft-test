@@ -19,8 +19,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
         const { createUserDto } = command;
 
         const hashedPassword = await this.passwordService.hashPassword(createUserDto.password);
-
-        const role = await this.roleRepository.findById(createUserDto.roleId);
+        const roleId = parseInt(createUserDto.roleId, 10)
+        const role = await this.roleRepository.findById(roleId);
 
         if (!role) {
             throw new NotFoundException(`Role with ID ${role.id} not found`);
@@ -30,7 +30,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
             createUserDto.username,
             createUserDto.email,
             createUserDto.name,
-            createUserDto.roleId,
+            roleId,
             hashedPassword,
         );
 

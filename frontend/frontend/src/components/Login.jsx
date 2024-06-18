@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -21,8 +22,9 @@ const Login = () => {
             localStorage.setItem('userId', response.data.user.id)
             console.log('Login exitoso')
 
-            navigate('/dashboard');
-
+            //window.location.href= '/dashboard';
+            window.location.href = "dashboard";
+            
         } catch (err) {
             setError('Login Failed. Please check your credentials and try again');
             console.log(err);
@@ -45,10 +47,11 @@ const Login = () => {
                         <input type="password" id='password' value={password} onChange={(e) => setPassword(e.target.value)} className='mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50' required/>
                     </div>
                     <div className='mb-4 text-right'>
-                        <a href="#" className='text-sm text-blue-600 hover:underline'>Se te olvido tu contraseña?</a>
+                        <a href="/recover-password" className='text-sm text-blue-600 hover:underline'>Se te olvido tu contraseña?</a>
                     </div>
                     <button type='submit' className='w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-md'>Log in</button>
                 </form>
+                {error && <p className='text-red-500 mt-2'>{error}</p>}
             </div>
         </div>
     )

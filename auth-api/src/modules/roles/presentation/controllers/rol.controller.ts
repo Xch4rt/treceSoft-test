@@ -21,7 +21,7 @@ export class RolController {
 
     @Post()
     @UseGuards(JwtAuthGuard, RoleGuard)
-    @Roles('SuperAdmin')
+    @Roles('Super Admin')
     async createRol(@Body() createRolDto: CreateRolDto) : Promise<any> {
 
         const command = new CreateRolCommand(createRolDto);
@@ -31,7 +31,7 @@ export class RolController {
 
     @Get()
     @UseGuards(JwtAuthGuard, RoleGuard)
-    @Roles('Role1')
+    @Roles('Role1', 'SuperAdmin')
     async getAllRoles(): Promise<Rol[]> {
         return this.queryBus.execute(new GetAllRolesQuery());
     }

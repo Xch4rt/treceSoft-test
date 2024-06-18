@@ -11,7 +11,7 @@ async function main () {
 
     const superAdminRole = await prisma.rol.create({
         data: {
-            Description: 'Super Admin',
+            Description: 'SuperAdmin',
         }
     });
 

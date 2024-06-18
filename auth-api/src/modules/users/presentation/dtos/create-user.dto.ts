@@ -34,7 +34,7 @@ export class CreateUserDto {
   @ApiProperty({
     description: "Role ID to assign"
   })
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  readonly roleId: number;
+  readonly roleId: string;
 }
