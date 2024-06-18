@@ -16,6 +16,7 @@ const ForgotPassword = () => {
       });
 
       setMessage('A password reset link has been sent to your email.');
+      window.location.href = '/reset-password'
       setError('');
     } catch (err) {
       setError('Failed to send password reset link. Please check your details and try again.');

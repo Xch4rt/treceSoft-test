@@ -20,7 +20,7 @@ export class ResetPasswordHandler implements ICommandHandler<ResetPasswordComman
     async execute(command: ResetPasswordCommand): Promise<any> {
         const { resetPasswordDto } = command;
 
-        await this.passwordResetRepository.resetPassword(resetPasswordDto.userId, resetPasswordDto.password, resetPasswordDto.token);
+        await this.passwordResetRepository.resetPassword(resetPasswordDto.password, resetPasswordDto.token);
     }
     
 }

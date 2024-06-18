@@ -12,7 +12,7 @@ export class PasswordResetRepository implements IPasswordResetRepository {
 
     constructor (private readonly prisma: PrismaService, private readonly passwordService: PasswordService) {}
     
-    async resetPassword(userId: number, password: string, token: string): Promise<any> {
+    async resetPassword(password: string, token: string): Promise<any> {
         const isTokenValid = await this.prisma.token.findFirst({
             where: {
                 ResetToken: token
@@ -28,7 +28,7 @@ export class PasswordResetRepository implements IPasswordResetRepository {
 
         const updatedPassword = await this.prisma.user.update({
             where: {
-                Id: userId
+                Id: isTokenValid.UserId
             }, 
             data: {
                 Password : newPasswordHashed

@@ -3,13 +3,6 @@ import { IsString, IsNotEmpty, MinLength, IsNumber } from 'class-validator';
 
 export class ResetPasswordDto {
   @ApiProperty({
-    description: "Users id"
-  })
-  @IsNumber()
-  @IsNotEmpty()
-  readonly userId: number;
-
-  @ApiProperty({
     description: "Password token"
   })
   @IsString()

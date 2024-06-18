@@ -15,8 +15,8 @@ function App() {
   return (
       <Routes>
         <Route path="/" element={token ? <Navigate to="dashboard"/> :<Login/>}></Route>
-        <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
-        <Route path='/reset-password' element={<ResetPassword/>}></Route>
+        <Route path='forgot-password' element={<ForgotPassword/>}></Route>
+        <Route path='reset-password' element={<ResetPassword/>}></Route>
         <Route path="dashboard" element={token ? <Dashboard/> : <Navigate to="/" />}>
           <Route path='security' element={<Security/>}></Route>
           <Route path='create-user' element={role === 'SuperAdmin' ? <CreateUser /> : <Navigate to="dashboard/security" />} ></Route>

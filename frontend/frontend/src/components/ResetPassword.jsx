@@ -3,25 +3,26 @@ import axios from 'axios';
 
 const ResetPassword = () => {
   const [token, setToken] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [password, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newPassword !== confirmPassword) {
+    if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
     try {
       const response = await axios.post('http://localhost:3000/api/auth/reset-password', {
         token,
-        newPassword,
+        password,
       });
 
       setMessage('Your password has been successfully reset.');
       setError('');
+      window.location.href = '/';
     } catch (err) {
       setError('Failed to reset password. Please check your token and try again.');
       setMessage('');
@@ -46,11 +47,11 @@ const ResetPassword = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="newPassword" className="block text-sm font-medium text-gray-700">New Password</label>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700">New Password</label>
             <input
               type="password"
-              id="newPassword"
-              value={newPassword}
+              id="password"
+              value={password}
               onChange={(e) => setNewPassword(e.target.value)}
               className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
               required
